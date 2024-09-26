@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Music Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .player-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .song-list {
+      margin-top: 20px;
+      list-style: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    .song-list li {
+      padding: 10px;
+      background-color: #e0e0e0;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .song-list li:hover {
+      background-color: #d0d0d0;
+    }
+
+    .audio-player {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .audio-player button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 20px;
+      background-color: #f56342;
+      color: white;
+      cursor: pointer;
+    }
+
+    .audio-player button:hover {
+      background-color: #e05236;
+    }
+
+    footer {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Music Website</h1>
+  </header>
+
+  <div class="player-container">
+    <h2>Now Playing: <span id="currentSong">Select a song from the list or play a random one</span></h2>
+
+    <ul class="song-list" id="songList">
+      <!-- You can replace these with real song URLs -->
+      <li data-file="songs/choo_loo.mp3">CHoo Loo - Local Train</li>
+      <li data-file="songs/ishq.mp3">ISHQ-Lost and Found</li>
+      <li data-file="songs/song3.mp3">Song 3 - Artist 3</li>
+      <li data-file="songs/song4.mp3">Song 4 - Artist 4</li>
+      <li data-file="songs/song5.mp3">Song 5 - Artist 5</li>
+    </ul>
+
+    <div class="audio-player">
+      <audio id="audioPlayer" controls>
+        <source id="audioSource" src="" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+
+      <!-- Button to play a random song -->
+      <button id="randomSongBtn">Play Random Song</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 My Music Website. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const songList = document.getElementById('songList');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioSource = document.getElementById('audioSource');
+    const currentSong = document.getElementById('currentSong');
+    const randomSongBtn = document.getElementById('randomSongBtn');
+
+    // Add click event listener for each song item
+    songList.addEventListener('click', function(e) {
+      if (e.target && e.target.nodeName === 'LI') {
+        playSong(e.target);
+      }
+    });
+
+    // Function to play a song
+    function playSong(songElement) {
+      const songFile = songElement.getAttribute('data-file');
+      const songTitle = songElement.innerText;
+
+      // Set the audio source and play the song
+      audioSource.src = songFile;
+      audioPlayer.load();
+      audioPlayer.play();
+
+      // Update the current song title
+      currentSong.innerText = songTitle;
+    }
+
+    // Play a random song from the list
+    randomSongBtn.addEventListener('click', function() {
+      const songs = document.querySelectorAll('.song-list li');
+      const randomIndex = Math.floor(Math.random() * songs.length);
+      const randomSong = songs[randomIndex];
+      
+      playSong(randomSong); // Play the randomly selected song
+    });
+  </script>
+
+</body>
+</html>
